@@ -18,13 +18,13 @@ const { getFileHash } = require('./config/cacheBust');
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-try {
-  process.loadEnvFile('.env.example');
-} catch (err) {
-  if (err && err.code === 'ENOENT') {
-    console.log('No .env.example file found. This is OK if the required environment variables are already set in your environment.');
-  } else {
-    console.error('Error loading .env.example file:', err);
+for (const envFile of ['.env', '.env.example']) {
+  try {
+    process.loadEnvFile(envFile);
+  } catch (err) {
+    if (err && err.code !== 'ENOENT') {
+      console.error(`Error loading ${envFile} file:`, err);
+    }
   }
 }
 
@@ -440,24 +440,30 @@ if (process.env.NODE_ENV === 'development') {
 /**
  * Start Express server.
  */
-app.listen(app.get('port'), () => {
-  const { BASE_URL } = process.env;
-  const colonIndex = BASE_URL.lastIndexOf(':');
-  const port = parseInt(BASE_URL.slice(colonIndex + 1), 10);
+const startServer = () => {
+  app.listen(app.get('port'), () => {
+    const { BASE_URL } = process.env;
+    const colonIndex = BASE_URL.lastIndexOf(':');
+    const port = parseInt(BASE_URL.slice(colonIndex + 1), 10);
 
-  if (!BASE_URL.startsWith('http://localhost')) {
-    console.log(
-      `The BASE_URL environment variable is set to ${BASE_URL}.
+    if (!BASE_URL.startsWith('http://localhost')) {
+      console.log(
+        `The BASE_URL environment variable is set to ${BASE_URL}.
 If you open the app directly at http://localhost:${app.get('port')} instead of via your HTTPS-terminating endpoint (e.g., ngrok, Cloudflare, or similar), CSRF checks may fail and OAuth sign-in will be rejected due to a redirect mismatch.
 To avoid this, set BASE_URL to the HTTPS endpoint and always access the app through it in your browser.
 `,
-    );
-  } else if (app.get('port') !== port) {
-    console.warn(`WARNING: The BASE_URL environment variable and the App have a port mismatch. If you plan to view the app in your browser using the localhost address, you may need to adjust one of the ports to make them match. BASE_URL: ${BASE_URL}\n`);
-  }
+      );
+    } else if (app.get('port') !== port) {
+      console.warn(`WARNING: The BASE_URL environment variable and the App have a port mismatch. If you plan to view the app in your browser using the localhost address, you may need to adjust one of the ports to make them match. BASE_URL: ${BASE_URL}\n`);
+    }
 
-  console.log(`App is running on http://localhost:${app.get('port')} in ${app.get('env')} mode.`);
-  console.log('Press CTRL-C to stop.');
-});
+    console.log(`App is running on http://localhost:${app.get('port')} in ${app.get('env')} mode.`);
+    console.log('Press CTRL-C to stop.');
+  });
+};
+
+if (require.main === module) {
+  startServer();
+}
 
 module.exports = app;
