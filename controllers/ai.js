@@ -11,7 +11,6 @@ const { HfInference, InferenceClientProviderApiError } = require('@huggingface/i
 const { MongoClient } = require('mongodb');
 const Keyv = require('keyv').default;
 const KeyvMongo = require('@keyv/mongo').default;
-const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
 
 /**
  * Load a PDF file and return one Document per page using pdfjs-dist directly.
@@ -22,6 +21,7 @@ const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
  * the rest of the LangChain pipeline expect.
  */
 async function loadPdfDocuments(filePath) {
+  const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
   const data = new Uint8Array(fs.readFileSync(filePath));
   const pdf = await pdfjsLib.getDocument({
     data,
