@@ -20,7 +20,7 @@ const { getFileHash } = require('./config/cacheBust');
  */
 for (const envFile of ['.env', '.env.example']) {
   try {
-    process.loadEnvFile(envFile);
+    process.loadEnvFile(path.join(__dirname, envFile));
   } catch (err) {
     if (err && err.code !== 'ENOENT') {
       console.error(`Error loading ${envFile} file:`, err);
