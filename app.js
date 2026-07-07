@@ -62,6 +62,10 @@ Object.entries({
   process.env[key] ||= value;
 });
 
+if (process.env.BASE_URL && !/^https?:\/\//i.test(process.env.BASE_URL)) {
+  process.env.BASE_URL = `https://${process.env.BASE_URL}`;
+}
+
 /**
  * Set config values
  */
