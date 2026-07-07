@@ -21,11 +21,17 @@ exports.getFileHash = (fileUrl, libFiles, rootDir) => {
     filePath = path.join('public', fileUrl.slice(1));
   }
 
-  const hash = crypto
-    .createHash('sha256')
-    .update(fs.readFileSync(path.join(rootDir, filePath)))
-    .digest('hex')
-    .slice(0, 8);
+  let hash;
+  try {
+    hash = crypto
+      .createHash('sha256')
+      .update(fs.readFileSync(path.join(rootDir, filePath)))
+      .digest('hex')
+      .slice(0, 8);
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+    hash = 'missing';
+  }
 
   fileHashCache.set(fileUrl, hash);
   return hash;
