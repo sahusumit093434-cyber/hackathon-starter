@@ -28,6 +28,34 @@ for (const envFile of ['.env', '.env.example']) {
   }
 }
 
+Object.entries({
+  DISCORD_CLIENT_ID: 'discord-client-id',
+  DISCORD_CLIENT_SECRET: 'discord-client-secret',
+  FACEBOOK_ID: '754220301289665',
+  FACEBOOK_SECRET: '41860e58c256a3d7ad8267d3c1939a4a',
+  GITHUB_ID: 'cb448b1d4f0c743a1e36',
+  GITHUB_SECRET: '815aa4606f476444691c5f1c16b9c70da6714dc6',
+  GOOGLE_CLIENT_ID: '828110519058.apps.googleusercontent.com',
+  GOOGLE_CLIENT_SECRET: 'JdZsIaWhUFIchmC1a_IZzOHb',
+  LINKEDIN_ID: '77chexmowru601',
+  LINKEDIN_SECRET: 'szdC8lN2s2SuMSy8',
+  MICROSOFT_CLIENT_ID: 'a533430d-c980-4ffc-8c74-d1b123456780',
+  MICROSOFT_CLIENT_SECRET: 'HbX8R~0PXopRmDgfliVl~6fEHTtFg1NC98xmEssZ',
+  QUICKBOOKS_CLIENT_ID: 'ABQSXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxnIxiz',
+  QUICKBOOKS_CLIENT_SECRET: 'Kux3xxxxxxxxxxxxxxxxxxxxxxxxxxxxj58mqYCD',
+  STEAM_KEY: 'D1240DEF4D41D416FD291D0075B6ED3F',
+  TRAKT_ID: 'trakt-client-id',
+  TRAKT_SECRET: 'trakt-client-secret',
+  TUMBLR_KEY: 'FaXbGf5gkhswzDqSMYI42QCPYoHsu5MIDciAhTyYjehotQpJvM',
+  TUMBLR_SECRET: 'QpCTs5IMMCsCImwdvFiqyGtIZwowF5o3UXonjPoNp4HVtJAL4o',
+  TWITCH_CLIENT_ID: 'khdxxxxxxxxxxxxxxxxxxxxxxxxvqd',
+  TWITCH_CLIENT_SECRET: 'exhyxxxxxxxxxxxxxxxxxxxxxxudn5',
+  X_KEY: 'x-api-key',
+  X_SECRET: 'x-api-secret',
+}).forEach(([key, value]) => {
+  process.env[key] ||= value;
+});
+
 /**
  * Set config values
  */
