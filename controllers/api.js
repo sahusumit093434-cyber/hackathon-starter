@@ -5,7 +5,6 @@ const cheerio = require('cheerio');
 const { LastFmNode } = require('lastfm');
 const multer = require('multer');
 const { OAuth } = require('oauth');
-const { Octokit } = require('@octokit/rest');
 const stripe = require('stripe')(process.env.STRIPE_SKEY);
 const twilioClient = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 const googledrive = require('@googleapis/drive');
@@ -164,6 +163,7 @@ exports.getScraping = async (req, res, next) => {
  * GitHub API Example.
  */
 exports.getGithub = async (req, res, next) => {
+  const { Octokit } = await import('@octokit/rest');
   const limit = 10;
   let authFailure = 'NotFetched';
   if (!req.user) {
