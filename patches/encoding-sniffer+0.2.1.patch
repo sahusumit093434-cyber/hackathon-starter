@@ -1,0 +1,45 @@
+diff --git a/node_modules/encoding-sniffer/dist/commonjs/exodus-encoding.js b/node_modules/encoding-sniffer/dist/commonjs/exodus-encoding.js
+new file mode 100644
+index 0000000..8325649
+--- /dev/null
++++ b/node_modules/encoding-sniffer/dist/commonjs/exodus-encoding.js
+@@ -0,0 +1,13 @@
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: true });
++exports.TextDecoder = void 0;
++exports.labelToName = labelToName;
++const node_util_1 = require("node:util");
++Object.defineProperty(exports, "TextDecoder", { enumerable: true, get: () => node_util_1.TextDecoder });
++function labelToName(label) {
++  try {
++    return new node_util_1.TextDecoder(label).encoding;
++  } catch {
++    return null;
++  }
++}
+diff --git a/node_modules/encoding-sniffer/dist/commonjs/index.js b/node_modules/encoding-sniffer/dist/commonjs/index.js
+index 73c0173..b98d255 100644
+--- a/node_modules/encoding-sniffer/dist/commonjs/index.js
++++ b/node_modules/encoding-sniffer/dist/commonjs/index.js
+@@ -4,7 +4,7 @@ exports.getEncoding = exports.DecodeStream = void 0;
+ exports.decodeBuffer = decodeBuffer;
+ const node_stream_1 = require("node:stream");
+ // eslint-disable-next-line n/no-missing-import
+-const encoding_js_1 = require("@exodus/bytes/encoding.js");
++const encoding_js_1 = require("./exodus-encoding.js");
+ const sniffer_js_1 = require("./sniffer.js");
+ /**
+  * Sniff the encoding of a buffer, then decode it.
+diff --git a/node_modules/encoding-sniffer/dist/commonjs/sniffer.js b/node_modules/encoding-sniffer/dist/commonjs/sniffer.js
+index 9688551..b0ed01c 100644
+--- a/node_modules/encoding-sniffer/dist/commonjs/sniffer.js
++++ b/node_modules/encoding-sniffer/dist/commonjs/sniffer.js
+@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.Sniffer = exports.STRINGS = exports.ResultType = void 0;
+ exports.getEncoding = getEncoding;
+ // eslint-disable-next-line n/no-missing-import
+-const encoding_js_1 = require("@exodus/bytes/encoding.js");
++const encoding_js_1 = require("./exodus-encoding.js");
+ // https://html.spec.whatwg.org/multipage/syntax.html#prescan-a-byte-stream-to-determine-its-encoding
+ var State;
+ (function (State) {
