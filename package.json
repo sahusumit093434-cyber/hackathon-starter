@@ -64,7 +64,7 @@
     "langchain": "^1.5.3",
     "lastfm": "^0.9.4",
     "lusca": "^1.7.0",
-    "mailchecker": "^6.0.20",
+    "mailchecker": "^6.0.21",
     "mongodb": "^7.5.0",
     "mongoose": "^9.7.4",
     "morgan": "^1.11.0",
